@@ -1,8 +1,8 @@
 import milista from './milista.js';
-import React from "react";
+import React, {useState} from "react";
 
-class MiLista extends React.Component{
-    state = {incidencias : [ 
+function MiLista (){
+    const [incidencias, setIncidencias] = useState  ([ 
         {
             id_incidencia: 1,
             id_usuario: 'e768590345h',
@@ -114,13 +114,12 @@ class MiLista extends React.Component{
             ubicacion: "" 
         }
 
-    ]};
+    ]);
 
-    render(){
-        return(
+    return(
     <>
         <ul>
-            {this.state.incidencias.map((i) => (
+            {incidencias.map((i) => (
                 <li key={i.id_incidencia}><strong>Título: </strong>{i.titulo}, <br></br>
                 <strong>Descripción: </strong>{i.descripcion}, <br></br>
                 <strong>Usuario: </strong>{i.id_usuario}, <br></br>
@@ -132,5 +131,5 @@ class MiLista extends React.Component{
     </>
     );
   }
-}
+
 export default MiLista;

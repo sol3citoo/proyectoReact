@@ -1,8 +1,21 @@
 import './Form.css'
 import React, {useState} from "react";
 
+function Form(props){
 
-class Form extends React.Component {
+    const envioFormulario = (event)=>{
+        event.preventDefault();
+        const form = event.target;
+        props.agregarIncidencia(
+            form.titulo.value,
+            form.usuario.value,
+            form.descripcion.value,
+            form.categoria.value,
+            form.nivel.value,
+            form.ubicacion.value
+    )
+}
+/*class Form extends React.Component {
 envioFormulario = (event)=>{
     event.preventDefault();
     const form = event.target;
@@ -14,13 +27,12 @@ envioFormulario = (event)=>{
         form.nivel.value,
         form.ubicacion.value
     )
-}
+}*/
 
 
-    render(){
         return (
             <div>
-                <form onSubmit={this.envioFormulario}>
+                <form onSubmit={envioFormulario}>
                     
                     {/* Título */}
                     <div className="elemento-form">
@@ -70,5 +82,5 @@ envioFormulario = (event)=>{
             </div>
         )
     }
-}
+
 export default Form;

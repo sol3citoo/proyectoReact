@@ -1,12 +1,11 @@
 import React from "react";
-import './Footer.css';
 
 class Footer extends React.Component{
     render(){
         return(
-            <div className="footer">
+            <div className="bg-primary text-center text-white p-3">
                 <h3>
-                    Lorem Ipsum
+                    Copyright © 2025 Deva Rodríguez Gómez 
                 </h3>
             </div>
         );

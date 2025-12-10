@@ -8,7 +8,7 @@ function Form(props){
         const form = event.target;
         props.agregarIncidencia(
             form.titulo.value,
-            form.usuario.value,
+            form.email.value,
             form.descripcion.value,
             form.categoria.value,
             form.nivel.value,
@@ -42,8 +42,8 @@ envioFormulario = (event)=>{
                     </div>
                     {/* Usuario */}
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="floatingusuario" type="text" name="usuario" placeholder="Introduce el id del usuario" required/><br></br>
-                        <label for="floatingInput">Usuario</label>
+                        <input class="form-control" id="floatingusuario" type="email" name="email" placeholder="Introduce el correo" required/><br></br>
+                        <label for="floatingInput">Email</label>
                     </div>
                     {/* Descripción */}
                     <div class="form-floating mb-3">

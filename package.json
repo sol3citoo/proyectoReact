@@ -12,6 +12,7 @@
     "json-server-auth": "^2.1.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
+    "react-router-dom": "^7.15.1",
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
@@ -20,7 +21,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "api" : "json-server-auth --watch ./src/components/db/db.json --port 3004"
+    "api": "json-server-auth --watch db.json --port 3004"
   },
   "eslintConfig": {
     "extends": [

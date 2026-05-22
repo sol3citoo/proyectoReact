@@ -1,4 +1,5 @@
 import React,{useEffect, useState} from 'react';
+import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
 import Header from '../header/Header';
 import Footer from '../footer/Footer';
 import MiLista from '../IncidentList';
@@ -107,41 +108,83 @@ function App(){
     flexDirection: "column"
   };
 
-  if (!usuarioEstaLogueado) {
-    return (
+  return (
+    <BrowserRouter>
       <div className='card' style={estiloFondo}>
         <Header/>
         <div style={{flex: 1}}>
-          <Login setUsuarioLogin={setUsuarioLogin} usuarioEstaLogueado={usuarioEstaLogueado}/>
+
+          {!usuarioEstaLogueado ? (
+            <>
+              <Routes>
+                <Route path="*" element={<Login setUsuarioLogin={setUsuarioLogin} usuarioEstaLogueado={usuarioEstaLogueado}/>}/>
+              </Routes>
+            </>
+          ) : (
+            <>
+              <nav>
+                <Link to="/inicio">Inicio</Link> |{" "}
+                <Link to="/incidencias">Ver incidencias</Link> |{" "}
+                <Link to="/registrar">Registrar incidencia</Link>
+                {esAdmin && <> | <Link to="/admin">Gestión de usuarios/roles</Link></>}
+                {" "}| <button onClick={cerrarSesion}>Cerrar sesión</button>
+              </nav>
+
+              <Routes>
+                <Route path="/inicio" element={
+                  <div>
+                    <h2>Bienvenido a la página de incidencias</h2>
+                    <p>Hola, {usuarioLogin.nombre}</p>
+                  </div>
+                }/>
+
+                <Route path="/incidencias" element={
+                  <MiLista incidencias={incidencias}/>
+                }/>
+
+                <Route path="/registrar" element={
+                  <Form agregarIncidencia={agregarIncidencia}/>
+                }/>
+
+                {/* Ruta solo para admin */}
+                <Route path="/admin" element={
+                  esAdmin ? (
+                    <div>
+                      <h2>Gestión de usuarios y roles</h2>
+                      <table className="table table-striped">
+                        <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Rol</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {usuarios.map((u) => (
+                            <tr key={u.id}>
+                              <td>{u.id}</td>
+                              <td>{u.nombre}</td>
+                              <td>{u.email}</td>
+                              <td>{u.rol?.nombre_rol ?? u.rol}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  ) : <Navigate to="/inicio"/>
+                }/>
+
+                {/* Redirige cualquier ruta desconocida al inicio */}
+                <Route path="*" element={<Navigate to="/inicio"/>}/>
+              </Routes>
+            </>
+          )}
+
         </div>
         <Footer/>
       </div>
-    );
-  }
-
-  return (
-    <div className='card' style={estiloFondo}>
-      <Header/>
-      <div style={{flex: 1}}>
-        <h2 className="card-title mb-4 text-center">Bienvenido a la página de incidencias</h2>
-        <div>
-          <button>Ver incidencias</button>
-          <button>Registrar incidencia</button>
-          {esAdmin && <button>Gestión de usuarios/roles</button>}
-          <button onClick={cerrarSesion}>Cerrar sesión</button>
-        </div>
-        <div className="container-fluid mt-4 row">
-          <main className="col-md-6">
-            <p>Bienvenido a mi aplicación, esto fue creado con JavaScript en React</p>
-            <MiLista incidencias={incidencias}/>
-          </main>
-          <aside className="col-md-6">
-            <Form agregarIncidencia={agregarIncidencia}/>
-          </aside>
-        </div>
-      </div>
-      <Footer/>
-    </div>
+    </BrowserRouter>
   );
 }
 
